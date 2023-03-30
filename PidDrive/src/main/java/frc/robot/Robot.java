@@ -91,9 +91,10 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    double vel = rc.j.getLeftY();
+    double vel = rc.j.getLeftY() * (Constants.MAXSPEED);
     //double turn = rc.j.getLeftX();
-    double turn = rc.j.getRightX();
+    double turn = rc.j.getRightX() * (2*Math.PI);
+
     leftDistance += rc.leftEncoder.getDistance();
     rightDistance += rc.rightEncoder.getDistance();
   
@@ -106,11 +107,7 @@ public class Robot extends TimedRobot {
   SmartDashboard.putNumber("Left getDistance", rc.leftEncoder.getDistance());
   SmartDashboard.putNumber("Right getDistance", rc.rightEncoder.getDistance());
     
-  //CommandScheduler.getInstance().schedule(new Drive(rc.leftSide, rc.rightSide, 300));
-
-
-  CommandScheduler.getInstance().schedule(new DriveCommand(vel, turn, rc));
-
+  CommandScheduler.getInstance().schedule(new DriveCommand(rc.driveSubsystem, vel, turn));
 
   }
 

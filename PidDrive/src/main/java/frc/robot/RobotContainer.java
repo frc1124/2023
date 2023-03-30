@@ -41,7 +41,7 @@ public class RobotContainer {
   public final XboxController j;
   
   // Gyro 
-  private final AHRS navx = new AHRS();
+  public final AHRS navx = new AHRS();
 
 
   // PID Controllers
@@ -53,19 +53,22 @@ public class RobotContainer {
   // Drive Motors
   CANSparkMax leftFront = new CANSparkMax(Constants.LEFT_FRONT, MotorType.kBrushless);
   CANSparkMax leftBack = new CANSparkMax(Constants.LEFT_BACK, MotorType.kBrushless);
-  MotorControllerGroup leftGroup = new MotorControllerGroup(leftFront, leftBack);
+  public MotorControllerGroup leftGroup = new MotorControllerGroup(leftFront, leftBack);
 
   CANSparkMax rightFront = new CANSparkMax(Constants.RIGHT_FRONT, MotorType.kBrushless);
   CANSparkMax rightBack = new CANSparkMax(Constants.RIGHT_BACK, MotorType.kBrushless);
-  MotorControllerGroup rightGroup = new MotorControllerGroup(rightFront, rightBack);
+  public MotorControllerGroup rightGroup = new MotorControllerGroup(rightFront, rightBack);
 
   //encoders
   public Encoder leftEncoder = new Encoder(4, 5, false, CounterBase.EncodingType.k4X);
   public Encoder rightEncoder = new Encoder(6, 7, true, CounterBase.EncodingType.k4X);
 
 
-  //public final PidDrive leftSide = new PidDrive(leftGroup, `, navx, leftVController, false);
-  //public final PidDrive rightSide = new PidDrive(rightGroup, rightEncoder, navx, rightVController, true);
+  public final PidDrive leftSide = new PidDrive(leftGroup, leftEncoder, navx, leftVController, false);
+  public final PidDrive rightSide = new PidDrive(rightGroup, rightEncoder, navx, rightVController, true);
+
+  // DriveSubsystem
+  public final DriveSubsystem driveSubsystem = new DriveSubsystem(this);
 
   // Differential Drive
   public DifferentialDrive differentialDrive = new DifferentialDrive(leftGroup, rightGroup);
@@ -77,13 +80,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    
-
-
-
-
-
-    j = new XboxController(0);
+      j = new XboxController(0);
     // Configure the trigger bindings
     configureBindings();
   }
@@ -129,6 +126,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return Autos.exampleAuto(driveSubsystem);
   }
 }

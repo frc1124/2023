@@ -10,10 +10,10 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
-public class DriveCommand extends CommandBase {
+public class DriveDistance extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final DriveSubsystem m_subsystem;
-  private final double xDistance;
+  private final double distance;
   private final double rot;
 
   /**
@@ -21,10 +21,10 @@ public class DriveCommand extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public DriveCommand(DriveSubsystem subsystem, double xDistance, double rot) {
+  public DriveDistance(DriveSubsystem subsystem, double distance, double rot) {
     m_subsystem = subsystem;
-    this.xDistance = xDistance;
     this.rot = rot;
+    this.distance = distance;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -41,11 +41,13 @@ public class DriveCommand extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_subsystem.stop();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_subsystem.getXDistance() >= xDistance;
+    return m_subsystem.getXDistance() >= distance;
   }
 }

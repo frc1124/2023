@@ -24,10 +24,10 @@ public final class Constants {
   public static final int RIGHT_FRONT = 3;
   public static final int RIGHT_BACK = 4;
 
-
-
   public static final double LEFT_ANGLE_P = 0;
   public static final double RIGHT_ANGLE_P = 0;
+
+  public static final double track_width = 1.5; // Inches
 
   //velocity PIDs
   public static final double VEL_L_P = 0.0339;// 0.037 | 0.035 - 0.036
